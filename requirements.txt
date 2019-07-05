@@ -1,0 +1,4 @@
+flask
+wikipedia
+gtts
+sqlalchemy

@@ -1,0 +1,81 @@
+<html lang="en-US">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <title>Shingi Chat: Chatbot reviewing</title>
+<style>
+	h1{
+		font-family: "Calibri Light";
+		background-color: #ffc ;
+		font-family: 3rem;
+		padding: 10px;
+		margin: 0px;
+	}
+	h2{
+		color: white  ;
+		font-family: "Verdana" ;
+		font-weight: bold;
+		background-color: #440;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		margin: 0px;
+	}
+	
+	.username{
+		font-size: 1.2rem ;
+		font-weight: bold;
+		font-family: Cambria ;
+		width: 50%;
+		background-color: #dfd ;
+		color: #111;
+		padding-right: 20px;
+		border: 1px #afa solid;
+		margin: 0px;
+	}
+	
+	.username:before{
+		content: "User: ";
+	}
+	
+	.time-posted{
+		font-family: "fixedsys";
+		margin: 0px;
+	}
+	
+	.post-area{
+		margin-bottom: 20px;
+		border-bottom: 2px #fcc solid;
+		border-top: 2px #cfc solid;
+	}
+	
+	.post-content{
+		background-color: #eef ;
+		font-family: "Open Sans", "Calibri Light";
+		padding: 10px;
+		margin: 0px;
+		border-radius: 10px;
+		font-family: Neuton;
+		font-size: large;
+	}
+	
+	.post-content:before{
+		content: "Bot says:"
+	}
+</style>
+ </head>
+ <body>
+	<h1>Shingi's Chatbot: Let's check out the chat history!</h1>
+	<h2>On the agenda : Chatbot Performance Reviewing </h2>
+	
+	<div class="main-area">
+       {% for chat in chats %}
+		<div class="post-area">
+		  <label class="username"> 	 {{ chat.user_input }}	</label>
+		  <label class="time-posted">{{ chat.posttime}}    </label>
+		  <p class="post-content">   {{ chat.bot_response}} </p>
+		</div>
+       {% endfor %}
+		  
+		</section>
+	</div>
+ </body>

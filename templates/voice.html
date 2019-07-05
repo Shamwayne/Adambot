@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Let's chat with the customer chatbot!</title>
+    <style media="screen">
+      body{
+        background-color: #eef;
+      }
+
+      fieldset{
+        background-color: #fee;
+        font-family: "Roboto";
+      }
+
+      label{
+        font-family: "Calibri";
+        font-size: 1.2rem;
+      }
+
+      .user-box{
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        box-shadow: 1px 1px 3px 2px gray;
+        width: 80%;
+      }
+
+      .chatbot-box{
+        background-color: rgba(200, 200, 255, 0.95);
+        padding: 20px;
+        width: 80%;
+        box-shadow: 1px 1px 5px 2px gray;
+        margin-bottom: 10px;
+      }
+
+      .botwindow{
+        font-family: "Calibri light";
+        font-weight: bold;
+        color: #111;
+      }
+
+      button{
+        background-color: white ;
+        font-weight: bold ;
+        border : none;
+        font-family: "Calibri light";
+        font-size: 1.2rem;
+        box-shadow: 1px 1px 3px 2px rgba(0,0,0,0.2);
+      }
+
+      #user-qn{
+        width: 60%;
+        font-size: 1.2rem;
+        border: 1px solid rgba(0,0,0,0.7);
+        font-weight: lighter;
+      }
+
+      #mike{
+      	border-radius: 50%;
+      }
+
+      .hidden{
+      	visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <fieldset>
+      <legend>Chatbot Interface Window:</legend>
+      <div class="chatbot-box">
+        <label>AdamBot:</label>
+        <p class="botwindow">
+          {{ chatbot_say }}
+        </p>
+    <audio autoplay>
+      <source src="{{ url_for('static', filename='reply.mp3') }}" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+      </div>
+      <form id="voice-form" class="" action="/voice" method="get">
+        <div class="user-box">
+          <label for="transcript" class="hidden">User Question:</label>
+          <input type="text" name="question" value="" class="hidden" id="transcript">
+          <img onclick="startDictation()" src="{{ url_for('static', filename='microphone.png') }}" id="mike"/>
+        </div>
+        <div class="user-box">
+        	<h3>You said: {{ user_said }}</h3>
+        </div>
+      </form>
+
+    </fieldset>
+<!-- HTML5 Speech Recognition API -->
+<script>
+  function startDictation() {
+
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+
+      var recognition = new webkitSpeechRecognition();
+
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      document.getElementById('mike').style.boxShadow = "15px 25px 35px blue";
+      recognition.lang = "en-UK";
+      recognition.start();
+
+      recognition.onresult = function(e) {
+        document.getElementById('transcript').value
+                                 = e.results[0][0].transcript;
+        recognition.stop();
+        document.getElementById('voice-form').submit();
+      };
+
+      recognition.onerror = function(e) {
+        recognition.stop();
+      }
+
+    }
+  }
+</script>
+  </body>
+</html>
